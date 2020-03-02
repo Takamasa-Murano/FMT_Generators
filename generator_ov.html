@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>GenieeSSP設定コードジェネレータ：オーバーレイ</title>
+  <script>
+        window.addEventListener('DOMContentLoaded',function(){
+        var forYDN =  (function(){/*<!-- YDNアドソースのタグ欄にのみ記入する箇所　ここから -->
+<script type="text/javascript">
+window.__gn_ov_yads_params = true;
+</scr*/}).toString().match(/\/\*([^]*)\*\//)[1] + (function(){/*ipt>
+<!-- YDNアドソースのタグ欄にのみ記入する箇所　ここまで -->*/}).toString().match(/\/\*([^]*)\*\//)[1];
+        document.getElementById("YDNtag").getElementsByTagName("textarea")[0].value = forYDN;
+            },false);
+  </script>
+
+  <style>
+      .square_btn{
+        display: inline-block;
+        padding: 0.5em 1em;
+        text-decoration: none;
+        background: #668ad8;/*ボタン色*/
+        color: #FFF;
+        border-bottom: solid 4px #627295;
+        border-radius: 3px;
+      }
+      .square_btn:active {/*ボタンを押したとき*/
+        -ms-transform: translateY(4px);
+        -webkit-transform: translateY(4px);
+        transform: translateY(4px);/*下に動く*/
+        border-bottom: none;/*線を消す*/
+      }
+      .output_form{
+          width:96%;
+          height:195px;
+      }
+      .help-block{
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        color: #737373;
+        font-size: 13px;
+      }
+      p{ margin-top: 0px; margin-bottom: 5px; }
+  </style>
+</head>
+<body bgcolor="lightgray">
+    <h1>オーバーレイゾーン設定ジェネレータ</h1>
+    <span style="font-size:10px;">2019年10月3日更新</span><br>
+    <span style="font-size:16px;"><a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/573374954" target="_blank">マニュアルへ</a>　<a href="generator_ov_old.html">旧バージョンへ</a></span>
+    <p><span style="font-size:15px;">※YDNアドソースを使用する際には、<a href="https://geniee.atlassian.net/wiki/spaces/adplatformdivision/pages/126845128/Yahoo+Display+AD+Network+YDN">掲載ポリシー等</a>への違反がないか確認すること、またアドソースに以下のテキストボックス中の記述を追記しておくこと</span></p>
+    <p><span style="font-size:15px;">※空き枠検知をONにするとアクティブ回避コードおよびUI制御が効かなくなるので、YDN、Bidswitch、DBMは停止にすること</span></p>
+    <p><span style="font-size:15px;">※GAM（旧DFP）経由で配信する場合は<a href="https://geniee.atlassian.net/wiki/spaces/jigyoukaihatuhonnbu/pages/756058053/GAM" target="_blank">こちら</a></span></p>
+
+
+<div id="get_btn">
+  <input type="button" class="square_btn" value="コードの取得" onclick="getCords(); testLinkOpen('zone_output', 'testpage_link'); testLinkOpen('zone_output', 'YDNtag'); codeTaketoTestPage('SPオーバーレイ', 4, 2, 'prepend_output', 'append_output', 'ad_source_output', 'zone_output');">
+</div>
+    
+<div id="inputs" style="float:left; max-width:49%;">
+    <span style="font-size:18px; border-bottom: solid 1px black;">入力項目</span><br>
+    <span style="font-size:12px; border-bottom: solid 1px black;">　必要な項目を入力して、↑の「コードの取得」ボタンを押す</span><br>
+    
+<!--<div id="zone_select">
+<p>
+ゾーンタイプ：
+<select name="zone_type" style="background-color:white;">
+  <option value="sp_ov" name="type_sp_ov" selected="selected">SPオーバーレイ</option>
+  <option value="pc_ov" name="type_pc_ov" disabled="disabled">スタンダードバナー（PCオーバーレイ時選択）</option>
+</select>
+</p>
+</div>-->
+
+<div id="banner_size">
+<p>
+バナーサイズ
+<select name="banner_size_type" style="background-color:white;" onChange="zoneTypeSwitch()">
+  <option value="320x50" name="type_320_50" selected="selected">320x50</option>
+  <option value="320x100" name="type_320_100">320x100</option>
+  <option value="468x90" name="type_468_60">468x60（PC用）</option>
+  <option value="468x60_double" name="type_468_60">468x60x2（PC用）</option>
+</select>
+</p>
+</div>
+
+<div id="close_btn_setting" style="display:none; border:solid 1px #000000;">
+<p>
+Xボタン設定<br>
+  <input type="checkbox" name="close_btn_set" value="1"> 左側にXボタンをつける（PCオーバーレイのみ有効）
+</p>
+</div>
+    
+<div id="double_overlay_setting" style="display:none; border:solid 1px #000000;">
+<p>
+横並びダブルオーバーレイ　アドソース設定<br>
+  左側広告用アドソース：<input type="text" class="adsource_param" name="double_left_adsource" size="10"><br>
+  右側広告用アドソース：<input type="text" class="adsource_param" name="double_right_adsource" size="10"><br>
+    <div id="left_adsource_caution" class="input_caution" style="display:none; color:red;"><p>※左側広告用アドソースの内容が指定されていません</p></div>
+    <div id="right_adsource_caution" class="input_caution" style="display:none; color:red;"><p>※右側広告用アドソースの内容が指定されていません</p></div>
+</p>
+</div>
+    
+<div id="zoom_select" style="border:solid 1px #000000;">
+<p>
+拡大設定<br>
+  <input type="checkbox" name="width_zoom" onclick="formDisplay(this.name, 'width_zoom_ydn');" value="1"> 横幅拡大を行う　<div id="width_zoom_ydn" style="display:none; font-size:12px; margin-left: 15px;"><input type="checkbox" name="width_zoom_ydncheck" value="1">YDNでは行わない</div>
+</p>
+</div>
+
+
+<div id="pr_bar_select" style="border:solid 1px #000000;">
+<p>
+PRバー設定<br>
+  <input type="checkbox" name="pr_bar" onclick="formDisplay(this.name, 'pr_settings'); /*formDisplay(this.name, 'pr_move_settings');*/ formDisplay(this.name, 'pr_bar_ydn');" value="1"> PRバーをつける <div id="pr_bar_ydn" style="display:none; font-size:12px; margin-left: 15px;"><input type="checkbox" name="pr_bar_ydncheck" value="1">YDNでは行わない</div>
+    <div id="pr_settings" style="display:none; margin-left: 15px;">
+  PRテキスト：<input type="text" class="pr_param" name="pr_text" size="10" maxlength="20" value="[PR]"><br>
+  <p class="help-block">帯の中に書く文字(20文字以内)</p>
+    <div id="pr_text_caution" class="input_caution" style="display:none; color:red;">
+<p>※PRバーの内容が指定されていません</p>    
+</div>
+  PRテキスト縦幅：<input type="text" class="pr_param" name="pr_height" size="10" value="20">px<br>
+  <p class="help-block">テキストを追加する帯の縦幅</p>
+    <div id="pr_height_caution" class="input_caution" style="display:none; color:red;">
+<p>※PRバーの高さが指定されていません</p>    
+</div>
+  PR文字サイズ：<input type="text" class="pr_param" name="pr_font_size" size="10" value="15">px<br>
+  <p class="help-block">文字のフォントサイズ</p>
+    <div id="pr_font_size_caution" class="input_caution" style="display:none; color:red;">
+<p>※PRバーのフォントサイズが指定されていません</p>    
+</div>
+  PR背景色：<input type="text" class="pr_param" name="pr_background" size="10" value="black"><br>
+  <p class="help-block">帯の背景色。直接入力も可能（記入例：色名で指定⇒ white　cssで指定⇒ #000000 ）</p>
+    <div id="pr_background_caution" class="input_caution" style="display:none; color:red;">
+<p>※PRバーの背景色が指定されていません</p>    
+</div>
+  PR文字色：<input type="text" class="pr_param" name="pr_font_color" size="10" value="white"><br>
+  <p class="help-block">帯の中に書く文字色。直接入力も可能（記入例：色名で指定⇒ white　cssで指定⇒ #000000 ）</p>
+        <div id="pr_font_color_caution" class="input_caution" style="display:none; color:red;">
+<p>※PRバーの文字色が指定されていません</p>    
+</div>
+    </div>
+    <div id="pr_move_settings" style="display:none; margin-left: 15px;">
+      <input type="checkbox" name="pr_move" onclick="formDisplay(this.name, 'pr_settings');" value="1"> PRバーの文言を動かす
+    </div>
+</p>
+</div>
+
+<div id="up_shift_select" style="border:solid 1px #000000;">
+<p>
+ページ下部での設定<br>
+    <input type="checkbox" name="up_shift" onclick="formDisplay(this.name, 'up_shift_ydn'); selecterActivate(this.name, 'under_space');" value="1"> ページ最下部まで来た際に上側固定で表示させる <div id="up_shift_ydn" style="display:none; font-size:12px; margin-left: 15px;"><input type="checkbox" name="up_shift_ydncheck" value="1"> YDNでは行わない</div>
+    <input type="checkbox" name="under_space" onclick="formDisplay(this.name, 'under_space_ydn'); selecterActivate(this.name, 'up_shift');" value="1"> ページ最下部にオーバーレイ広告分のスペースをつける <div id="under_space_ydn" style="display:none; font-size:12px; margin-left: 15px;"><input type="checkbox" name="under_space_ydncheck" value="1"> YDNでは行わない</div>
+</p>
+</div>
+
+<div id="background_change" style="border:solid 1px #000000;">
+<p>
+背景設定（RGBで設定）<br>
+<input type="checkbox" name="background_color" onclick="formActivate(this.name, 'background_color_change')" value="0" style="margin-left: 15px;">背景色設定：<input type="text" name="background_color_style" class="background_color_change" size="20" disabled="disabled"><br>
+    <div id="background_color_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+<p>※背景色が設定されていません</p>    
+</div>
+</p>
+</div>
+    
+<div id="with_inst_setting" style="border:solid 1px #000000;">
+<p>
+インステが表示されている場合の設定<br>
+  <input type="checkbox" name="with_inst_hidden" onclick="formDisplay(this.name, 'inst_hidden_settings');" value="1"> インステが表示されている間は非表示の状態にする
+  <div id="inst_hidden_settings" style="display:none; margin-left: 15px;">
+  インステ領域のid名：<input type="text" class="inst_param" name="inst_area_id" size="10" maxlength="20" value="gn_interstitial_area"><br>
+  <p class="help-block">インステ領域全体に相当するdivタグのid名（デフォルト：gn_interstitial_area）</p>
+    <div id="inst_area_caution" class="input_caution" style="display:none; color:red;">
+<p>※インステ領域のid名が指定されていません</p>    
+</div>
+  インステXボタンのid名：<input type="text" class="inst_param" name="inst_close_id" size="10" maxlength="20" value="gn_interstitial_close_icon"><br>
+  <p class="help-block">インステXボタンに相当するimgタグのid名（デフォルト：gn_interstitial_close_icon）</p>
+    <div id="inst_close_caution" class="input_caution" style="display:none; color:red;">
+<p>※インステXボタンのid名が指定されていません</p>    
+</div>
+    </div>
+</p>
+</div>
+
+<div id="pre_scroll_setting" style="border:solid 1px #000000;">
+<p>
+スクロール前の表示状態設定<br>
+  <input type="checkbox" name="pre_scroll_hidden" onclick="formDisplay(this.name, 'pre_scroll_hidden_settings');" value="1"> ある程度スクロールされた後に表示させる
+    <div id="pre_scroll_hidden_settings" style="display:none; margin-left: 15px;">
+  どの程度スクロールしたら表示させるか：<input type="text" class="pre_scroll_param" name="pre_scroll_height" size="10" maxlength="20" value="50">px<br>
+    <div id="pre_scroll_caution" class="input_caution" style="display:none; color:red;">
+<p>※表示までのスクロール距離が指定されていません</p>    
+</div>
+    </div>
+</p>
+</div>
+
+<div id="ad_source_individual_setting" style="border:solid 1px #000000;">
+<p>
+アドソースごとの個別設定<br>
+  <input type="checkbox" name="adsource_individual_height" onclick="formDisplay(this.name, 'height_settings');" value="1"> 高さをバナーサイズから変える
+    <div id="height_settings" style="display:none; margin-left: 15px;">高さ：<input type="text" class="height_param" name="adsource_height" size="10" maxlength="20" value="100">px</div>
+    <div id="height_setting_caution" class="input_caution" style="display:none; color:red;">
+<p>※変更後高さが指定されていません</p>    
+</div>
+  <input type="checkbox" name="adsource_pr_bar_delete" value="1"> PRバーを消す
+    
+</p>
+</div>
+
+</div>
+    
+
+<div id="output_area" style="margin-left:50%;">
+    <span style="font-size:18px; border-bottom: solid 1px black;">出力項目</span><br>
+    <span style="font-size:12px; border-bottom: solid 1px black;">　獲得されるコードをゾーンの各欄に記入する</span><br>
+    <div id="testpage_link" style="font-size:12px; display:none;">
+        <a href="http://other.geniee.jp/test/murano/Reproducts/openCodesTestField.html" target="_blank"><span>出力コードの表示テスト（新規タブで開きます）</span></a><br>
+        <a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/891033854/iPhoneX" target="_blank"><span>iPhoneX以降の機種で画面下部から離れて表示される仕様について（対応コード含む）</span></a>
+    </div>
+    <br>
+    
+  ゾーンタイプ：<br>
+    <textarea id="zone_output" size="30" style="width:150px; height:18px;"></textarea><br>
+  Prepend：<br>
+    <textarea id="prepend_output" class="output_form"></textarea><br>
+  Append：<br>
+    <textarea id="append_output" class="output_form"></textarea><br>
+  アドソース　タグ欄：<br>
+    <textarea id="ad_source_output" class="output_form"></textarea><br>
+    <span id="YDNtag" style="display:none; font-size:12px;" >※YDNアドソースに対しては、アドソースタグ欄冒頭に↓のコードを実装する
+    <textarea cols="80" rows="6" style="resize:none;" readonly="readonly"></textarea>
+    </span>
+
+</div>
+
+
+<script type="text/javascript" src="generator_form_script.js"></script>
+<script type="text/javascript" src="generator_datasend_script.js"></script>
+<script type="text/javascript" src="generator_ov_output.js"></script>
+<script>
+  function zoneTypeSwitch(){
+      var zone_type = document.getElementsByName("banner_size_type")[0].selectedIndex;
+      var close_setting = document.getElementById("close_btn_setting");
+      var double_setting = document.getElementById("double_overlay_setting");
+    if(zone_type >= 2) close_setting.style.display = "block";
+    else close_setting.style.display = "none";
+      
+    if(zone_type == 3) double_setting.style.display = "block";
+    else double_setting.style.display = "none";
+  }
+</script>
+
+
+</body>
+</html>
