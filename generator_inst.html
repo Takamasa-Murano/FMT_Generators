@@ -1,371 +1,434 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>GenieeSSP設定コードジェネレータ：インタースティシャル</title>
-    <script>
-        window.addEventListener('DOMContentLoaded',function(){
-        var forYDN =  (function(){/*<!-- YDNアドソースのタグ欄にのみ記入する箇所　ここから -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      var forYDN = (function () {/*<!-- YDNアドソースのタグ欄にのみ記入する箇所　ここから -->
 <script type="text/javascript">
 window.__gn_ov_yads_params = true;
-</scr*/}).toString().match(/\/\*([^]*)\*\//)[1] + (function(){/*ipt>
+</scr*/}).toString().match(/\/\*([^]*)\*\//)[1] + (function () {/*ipt>
 <!-- YDNアドソースのタグ欄にのみ記入する箇所　ここまで -->*/}).toString().match(/\/\*([^]*)\*\//)[1];
-        document.getElementById("YDNtag").getElementsByTagName("textarea")[0].value = forYDN;
-            },false);
+      document.getElementById("YDNtag").getElementsByTagName("textarea")[0].value = forYDN;
+    }, false);
   </script>
   <style>
-      .square_btn{
-        display: inline-block;
-        padding: 0.5em 1em;
-        text-decoration: none;
-        background: #668ad8;/*ボタン色*/
-        color: #FFF;
-        border-bottom: solid 4px #627295;
-        border-radius: 3px;
-      }
-      .square_btn:active {/*ボタンを押したとき*/
-        -ms-transform: translateY(4px);
-        -webkit-transform: translateY(4px);
-        transform: translateY(4px);/*下に動く*/
-        border-bottom: none;/*線を消す*/
-      }
-      .output_form{
-          width:96%;
-          height:195px;
-      }
-      p{ margin-top: 0px; margin-bottom: 5px; }
+    .square_btn {
+      display: inline-block;
+      padding: 0.5em 1em;
+      text-decoration: none;
+      background: #668ad8;
+      /*ボタン色*/
+      color: #FFF;
+      border-bottom: solid 4px #627295;
+      border-radius: 3px;
+    }
+
+    .square_btn:active {
+      /*ボタンを押したとき*/
+      -ms-transform: translateY(4px);
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+      /*下に動く*/
+      border-bottom: none;
+      /*線を消す*/
+    }
+
+    .output_form {
+      width: 96%;
+      height: 195px;
+    }
+
+    p {
+      margin-top: 0px;
+      margin-bottom: 5px;
+    }
+
+    body{
+      height: 1350px;
+    }
   </style>
 </head>
-<body bgcolor="lightgray">
-    <h1>インタースティシャルゾーン設定ジェネレータ</h1>
-    <span style="font-size:10px;">2019年10月9日更新</span><br>
-    <span style="font-size:16px;"><a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/545424557" target="_blank">マニュアルへ</a>　<a href="generator_inst_old.html">旧バージョンへ</a></span>
-    <p><span style="font-size:15px;">※YDNアドソースを使用する際には、<a href="https://geniee.atlassian.net/wiki/spaces/adplatformdivision/pages/126845128/Yahoo+Display+AD+Network+YDN">掲載ポリシー等</a>への違反がないか確認すること</span></p>
 
-<div id="get_btn">
-  <input type="button" class="square_btn" value="コードの取得" onclick="getCords(); testLinkOpen('zone_output', 'testpage_link'); testLinkOpen('zone_output', 'YDNtag'); codeTaketoTestPage('インタースティシャル', 3, 1, 'prepend_output', 'append_output', 'ad_source_output', 'zone_output');">
-</div>
-    
-<div id="inputs" style="float:left; max-width:49%;">
+<body bgcolor="lightgray">
+  <h1>インタースティシャルゾーン設定ジェネレータ</h1>
+  <span style="font-size:10px;">2019年10月9日更新</span><br>
+  <span style="font-size:16px;"><a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/545424557"
+      target="_blank">マニュアルへ</a>　<a href="generator_inst_old.html">旧バージョンへ</a></span>
+  <p><span style="font-size:15px;">※YDNアドソースを使用する際には、<a
+        href="https://geniee.atlassian.net/wiki/spaces/adplatformdivision/pages/126845128/Yahoo+Display+AD+Network+YDN">掲載ポリシー等</a>への違反がないか確認すること</span>
+  </p>
+
+  <div id="get_btn">
+    <input type="button" class="square_btn" value="コードの取得"
+      onclick="getCords(); testLinkOpen('zone_output', 'testpage_link'); testLinkOpen('zone_output', 'YDNtag'); codeTaketoTestPage('インタースティシャル', 3, 1, 'prepend_output', 'append_output', 'ad_source_output', 'zone_output');">
+  </div>
+
+  <div id="inputs" style="float:left; max-width:49%;">
     <span style="font-size:18px; border-bottom: solid 1px black;">入力項目</span><br>
     <span style="font-size:12px; border-bottom: solid 1px black;">　必要な項目を入力して、↑の「コードの取得」ボタンを押す</span><br>
-    
-<div id="zone_select">
-<p>
-ゾーンタイプ：
-<select name="zone_type" style="background-color:white;">
-  <option value="inst" name="type_inst" selected="selected">インタースティシャル</option>
-  <option value="st_banner" name="type_st_banner" disabled="disabled">スタンダードバナー</option>
-</select>
-</p>
-</div>
 
-<div id="zoom_select" style="border:solid 1px #000000;">
-<p>
-拡大設定
-<select name="zoom_type" style="background-color:white;" onChange="zoomSettingSwitch()">
-    <option value="notuse" name="no_zoom" selected="selected">なし</option>
-    <option value="zoom_move" name="zoom_move">ズーム（拡大挙動見せる）　<span style="color:red;">※YDNアドソースに対しての使用厳禁！</span></option>
-    <option value="zoom_nomove" name="zoom_nomove">拡大（拡大挙動見せない）</option>
-</select>
-</p>
-<div id="close_btn_size_keep_setting" style="display:none; color:black; margin-left: 15px; font-size: 12px;">
-<p>
-  <input type="checkbox" name="close_btn_size_keep_in_zoom" value="1"> 拡大後もXボタンのサイズを維持する<span style="color:red;">：推奨</span><br>
-  <input type="checkbox" name="zoom_only_sp" value="1"> SPでのみ拡大を有効にする<span style="color:red;">：推奨</span>
-</p>
-</div>
-  <span style="font-size: 11px;">※適用時、媒体の仕様により稀に不具合（×ボタンが効きにくい等）が生じる可能性（<a href="https://geniee.slack.com/archives/CL95KHPGX/p1571972181072800">実例</a>）があるため注意</span>
-</div>
-
-<div id="background_change" style="border:solid 1px #000000;">
-<p>
-背景設定<br>
-<input type="checkbox" name="background_color" onclick="/*formActivate(this.name, 'background_color_change')*/" value="0" style="margin-left: 15px; text-decoration: line-through" disabled="disabled">背景色変更：<input type="text" name="background_color_style" class="background_color_change" size="20" value="rgba(0, 0, 0, 0.5)" disabled="disabled"><span style="color:red; font-size: 12px;">（事業者からのクレームにより現状禁止）</span><br>
-    <div id="background_color_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
-<p>※背景色が設定されていません</p>    
-</div>
-<input type="checkbox" name="background_size" onclick="formActivate(this.name, 'background_size_change');" style="margin-left: 15px;" value="1">背景サイズ変更<br>
-    <div style="margin-left: 25px;">
-    幅：<input type="text" name="background_width_style" class="background_size_change" size="10" disabled="disabled">px<br>
-    <div id="background_width_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
-<p>※背景サイズ（幅）が設定されていません</p>    
-</div>
-    高さ：<input type="text" name="background_height_style" class="background_size_change" size="10" disabled="disabled">px<br>
-    <div id="background_height_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
-<p>※背景サイズ（高さ）が設定されていません</p>    
-</div>
+    <div id="zone_select">
+      <p>
+        ゾーンタイプ：
+        <select name="zone_type" style="background-color:white;">
+          <option value="inst" name="type_inst" selected="selected">インタースティシャル</option>
+          <option value="st_banner" name="type_st_banner" disabled="disabled">スタンダードバナー</option>
+        </select>
+      </p>
     </div>
-</p>
-</div>
 
-<div id="close_btn_type" style="border:solid 1px #000000;">
-<p>
-Closeボタン設定 <a href="https://geniee.atlassian.net/wiki/spaces/adplatformdivision/pages/643039606"><span style="font-size: 12px;">参考</span></a><br>
-<input type="checkbox" name="close_size" onclick="formActivate(this.name, 'close_btn_size')" value="0" style="margin-left: 15px;">サイズ変更：<input type="text" name="close_btn_size" class="close_btn_size" size="10" value="44" disabled="disabled"> px<br>
-    <div id="btn_size_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
-<p>※ボタンサイズが設定されていません</p>    
-</div>
-<input type="checkbox" name="close_pic" onclick="formActivate(this.name, 'close_btn_picture'); document.getElementsByName('close_lit')[0].checked = null; document.getElementsByName('close_btn_lit')[0].disabled = 'disabled'; changed_close_btn_preview();" style="margin-left: 15px;" value="1">使用する画像を差し替える<span style="color:red;">：推奨</span><br>　URL：<input type="text" name="close_btn_picture" class="close_btn_picture" onChange="changed_close_btn_preview();" size="40" value="https://js.gsspcln.jp/i/7c087a913cb9d4e76b672c4dc767c1a2.png" disabled="disabled">
-    <span style="font-size:10px;">プレビュー →</span>
-    <img src="" class="close_btn_picture" id="close_btn_picture_preview" alt="画像URL無効" style="display:none; width:20px; height:20px; margin-left:3px;"><br>
-    <div id="btn_picture_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
-<p>※ボタン用画像が設定されていません</p>    
-</div>
-<input type="checkbox" name="close_lit" onclick="formActivate(this.name, 'close_btn_lit'); document.getElementsByName('close_pic')[0].checked = null; document.getElementsByName('close_btn_picture')[0].disabled = 'disabled'" style="margin-left: 15px;" value="2">文字をCloseボタンとして使用：<input type="text" name="close_btn_lit" class="close_btn_lit" size="10" disabled="disabled"><br>
-    <div id="btn_lit_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
-<p>※ボタンに使用する文字が設定されていません</p>    
-</div>
-</p>
-</div>
-    
-<div id="scroll_type" style="border:solid 1px #000000;">
-<p>
-  <input type="checkbox" name="scroll_stop" value="1" disabled="disabled"> インステ表示時にスクロールを停止する
-</p>
-
-</div>
-
-<div id="timing_is" style="border:solid 1px #000000;">
-<p>
-  <input type="checkbox" name="timing_exist" value="1" onclick="formDisplay(this.name, 'timing_caution');"> Xボタンとレクタングルの表示タイミングを合わせる<span style="color:red;">：推奨</span>
-</p>
-<div id="timing_caution" style="display:none; color:black; margin-left: 15px;">
-<p>
-    ※Prepend項に表示されるコードをゾーンのPrependに追記する
-</p>    
-</div>
-</div>
-
-<div id="arrange_select" style="border:solid 1px #000000;">
-<p>
-    インタースティシャルの表示位置<br>
-    <div style="margin-left: 15px;">
-    ※拡大・ズーム設定適用時は「真ん中」推奨<br>
-    縦方向：
-    <select name="vertical_arrange_type" style="background-color:white;">
-      <option value="vertical_center" selected="selected">真ん中</option>
-      <option value="vertical_top">上端接地</option>
-      <option value="vertical_bottom">下端接地</option>
-    </select><br>
-    横方向：
-    <select name="horizontal_arrange_type" style="background-color:white;">
-      <option value="horizontal_center" selected="selected">真ん中</option>
-      <option value="horizontal_top">左端接地</option>
-      <option value="horizontal_bottom">右端接地</option>
-    </select><br>
+    <div id="zoom_select" style="border:solid 1px #000000;">
+      <p>
+        拡大設定
+        <select name="zoom_type" style="background-color:white;" onChange="zoomSettingSwitch()">
+          <option value="notuse" name="no_zoom" selected="selected">なし</option>
+          <option value="zoom_move" name="zoom_move">ズーム（拡大挙動見せる）　<span style="color:red;">※YDNアドソースに対しての使用厳禁！</span>
+          </option>
+          <option value="zoom_nomove" name="zoom_nomove">拡大（拡大挙動見せない）</option>
+        </select>
+      </p>
+      <div id="close_btn_size_keep_setting" style="display:none; color:black; margin-left: 15px; font-size: 12px;">
+        <p>
+          <input type="checkbox" name="close_btn_size_keep_in_zoom" value="1"> 拡大後もXボタンのサイズを維持する<span
+            style="color:red;">：推奨</span><br>
+          <input type="checkbox" name="zoom_only_sp" value="1"> SPでのみ拡大を有効にする<span style="color:red;">：推奨</span>
+        </p>
+      </div>
+      <span style="font-size: 11px;">※適用時、媒体の仕様により稀に不具合（×ボタンが効きにくい等）が生じる可能性（<a
+          href="https://geniee.slack.com/archives/CL95KHPGX/p1571972181072800">実例</a>）があるため注意</span>
     </div>
-</p>
-</div>
 
-<div id="afst_is" style="border:solid 1px #000000;">
-<p>
-  <input type="checkbox" name="afst_exist" value="1" onclick="formDoubleDisplay(this.name, 'back_inst_translate', 'afst_caution'); selecterActivate(this.name, 'type_inst'); selecterDoubleInactivate(this.name, 'back_inst_translate', 'type_st_banner'); selecterInactivate(this.name, 'scroll_stop'); if(document.getElementsByName('scroll_stop')[0].checked){document.getElementsByName('scroll_stop')[0].checked = false};"> 同じページ中でアフタースティシャルを使用する<br>
-  <input type="checkbox" name="back_inst_translate" value="1" onclick="formDoubleDisplay(this.name, 'afst_exist', 'afst_caution'); selecterActivate(this.name, 'type_inst'); selecterDoubleInactivate(this.name, 'afst_exist', 'type_st_banner');"> ブラウザバックが押された時に表示させる<br>
-</p>
+    <div id="background_change" style="border:solid 1px #000000;">
+      <p>
+        背景設定<br>
+        <input type="checkbox" name="background_color" onclick="/*formActivate(this.name, 'background_color_change')*/"
+          value="0" style="margin-left: 15px; text-decoration: line-through" disabled="disabled">背景色変更：<input
+          type="text" name="background_color_style" class="background_color_change" size="20" value="rgba(0, 0, 0, 0.5)"
+          disabled="disabled"><span style="color:red; font-size: 12px;">（事業者からのクレームにより現状禁止）</span><br>
+        <div id="background_color_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+          <p>※背景色が設定されていません</p>
+        </div>
+        <input type="checkbox" name="background_size" onclick="formActivate(this.name, 'background_size_change');"
+          style="margin-left: 15px;" value="1">背景サイズ変更<br>
+        <div style="margin-left: 25px;">
+          幅：<input type="text" name="background_width_style" class="background_size_change" size="10"
+            disabled="disabled">px<br>
+          <div id="background_width_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+            <p>※背景サイズ（幅）が設定されていません</p>
+          </div>
+          高さ：<input type="text" name="background_height_style" class="background_size_change" size="10"
+            disabled="disabled">px<br>
+          <div id="background_height_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+            <p>※背景サイズ（高さ）が設定されていません</p>
+          </div>
+        </div>
+      </p>
+    </div>
 
-<div id="afst_caution" style="display:none; color:red; margin-left: 15px;">
-<p>
-    ※同じページ中でアフタースティシャルと同時使用する場合／<br>ブラウザバックインステとして表示する場合は、<br>ゾーンタイプを「スタンダードバナー」に設定されます
-</p>    
-</div>
-</div>
+    <div id="close_btn_type" style="border:solid 1px #000000;">
+      <p>
+        Closeボタン設定 <a href="https://geniee.atlassian.net/wiki/spaces/adplatformdivision/pages/643039606"><span
+            style="font-size: 12px;">参考</span></a><br>
+        <input type="checkbox" name="close_size" onclick="formActivate(this.name, 'close_btn_size')" value="0"
+          style="margin-left: 15px;">サイズ変更：<input type="text" name="close_btn_size" class="close_btn_size" size="10"
+          value="44" disabled="disabled"> px<br>
+        <div id="btn_size_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+          <p>※ボタンサイズが設定されていません</p>
+        </div>
+        <input type="checkbox" name="close_pic"
+          onclick="formActivate(this.name, 'close_btn_picture'); document.getElementsByName('close_lit')[0].checked = null; document.getElementsByName('close_btn_lit')[0].disabled = 'disabled'; changed_close_btn_preview();"
+          style="margin-left: 15px;" value="1">使用する画像を差し替える<span style="color:red;">：推奨</span><br>　URL：<input
+          type="text" name="close_btn_picture" class="close_btn_picture" onChange="changed_close_btn_preview();"
+          size="40" value="https://js.gsspcln.jp/i/7c087a913cb9d4e76b672c4dc767c1a2.png" disabled="disabled">
+        <span style="font-size:10px;">プレビュー →</span>
+        <img src="" class="close_btn_picture" id="close_btn_picture_preview" alt="画像URL無効"
+          style="display:none; width:20px; height:20px; margin-left:3px;"><br>
+        <div id="btn_picture_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+          <p>※ボタン用画像が設定されていません</p>
+        </div>
+        <input type="checkbox" name="close_lit"
+          onclick="formActivate(this.name, 'close_btn_lit'); document.getElementsByName('close_pic')[0].checked = null; document.getElementsByName('close_btn_picture')[0].disabled = 'disabled'"
+          style="margin-left: 15px;" value="2">文字をCloseボタンとして使用：<input type="text" name="close_btn_lit"
+          class="close_btn_lit" size="10" disabled="disabled"><br>
+        <div id="btn_lit_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;">
+          <p>※ボタンに使用する文字が設定されていません</p>
+        </div>
+      </p>
+    </div>
 
-<div id="double_inst_is" style="border:solid 1px #000000;">
-<p>
-  <input type="checkbox" name="double_inst_use" onclick="formDisplay(this.name, 'double_inst_settings'); formNodisplay(this.name, 'rotate_settings_single'); formDisplay(this.name, 'rotate_settings_double'); formActivate(this.name, 'rotate_double'); formInactivate(this.name, 'rotate_single')" value="1"> ダブルインタースティシャルとして使用する<br>
-    <div id="double_inst_settings" style="display:none; margin-left: 15px;">
-    Closeボタン位置：
-    <select name="double_inst_close_btn" class="double_inst_setting" onChange="btnRandomiseSwitch();" style="background-color:white;">
-      <option value="close" selected="selected">真ん中</option>
-      <option value="close">左上</option>
-    </select><br>
-    <input type="checkbox" name="double_inst_close_btn_Xrandom" value="1">Closeボタン横位置をランダムにする<br>（位置：真ん中の場合のみ、左寄り／真ん中／右寄り）<br>
-    上側レクタングル設定<br>
-    <!--アドソース：
+    <div id="scroll_type" style="border:solid 1px #000000;">
+      <p>
+        <input type="checkbox" name="scroll_stop" value="1" disabled="disabled"> インステ表示時にスクロールを停止する
+      </p>
+
+    </div>
+
+    <div id="timing_is" style="border:solid 1px #000000;">
+      <p>
+        <input type="checkbox" name="timing_exist" value="1" onclick="toggleDisplayOnCheck(this.name, 'timing_caution');">
+        Xボタンとレクタングルの表示タイミングを合わせる<span style="color:red;">：推奨</span>
+      </p>
+      <div id="timing_caution" style="display:none; color:black; margin-left: 15px;">
+        <p>
+          ※Prepend項に表示されるコードをゾーンのPrependに追記する
+        </p>
+      </div>
+    </div>
+
+    <div id="arrange_select" style="border:solid 1px #000000;">
+      <p>
+        インタースティシャルの表示位置<br>
+        <div style="margin-left: 15px;">
+          ※拡大・ズーム設定適用時は「真ん中」推奨<br>
+          縦方向：
+          <select name="vertical_arrange_type" style="background-color:white;">
+            <option value="vertical_center" selected="selected">真ん中</option>
+            <option value="vertical_top">上端接地</option>
+            <option value="vertical_bottom">下端接地</option>
+          </select><br>
+          横方向：
+          <select name="horizontal_arrange_type" style="background-color:white;">
+            <option value="horizontal_center" selected="selected">真ん中</option>
+            <option value="horizontal_top">左端接地</option>
+            <option value="horizontal_bottom">右端接地</option>
+          </select><br>
+        </div>
+      </p>
+    </div>
+
+    <div id="afst_is" style="border:solid 1px #000000;">
+      <p>
+        <input type="checkbox" name="afst_exist" value="1"
+          onclick="formDoubleDisplay(this.name, 'back_inst_translate', 'afst_caution'); selecterActivate(this.name, 'type_inst'); selecterDoubleInactivate(this.name, 'back_inst_translate', 'type_st_banner'); selecterInactivate(this.name, 'scroll_stop'); if(document.getElementsByName('scroll_stop')[0].checked){document.getElementsByName('scroll_stop')[0].checked = false};">
+        同じページ中でアフタースティシャルを使用する<br>
+        <input type="checkbox" name="back_inst_translate" value="1"
+          onclick="formDoubleDisplay(this.name, 'afst_exist', 'afst_caution'); selecterActivate(this.name, 'type_inst'); selecterDoubleInactivate(this.name, 'afst_exist', 'type_st_banner');">
+        ブラウザバックが押された時に表示させる<br>
+      </p>
+
+      <div id="afst_caution" style="display:none; color:red; margin-left: 15px;">
+        <p>
+          ※同じページ中でアフタースティシャルと同時使用する場合／<br>ブラウザバックインステとして表示する場合は、<br>ゾーンタイプを「スタンダードバナー」に設定されます
+        </p>
+      </div>
+    </div>
+
+    <div id="double_inst_is" style="border:solid 1px #000000;">
+      <p>
+        <input type="checkbox" name="double_inst_use"
+          onclick="toggleDisplayOnCheck(this.name, 'double_inst_settings'); formNodisplay(this.name, 'rotate_settings_single'); toggleDisplayOnCheck(this.name, 'rotate_settings_double'); formActivate(this.name, 'rotate_double'); formInactivate(this.name, 'rotate_single')"
+          value="1"> ダブルインタースティシャルとして使用する<br>
+        <div id="double_inst_settings" style="display:none; margin-left: 15px;">
+          Closeボタン位置：
+          <select name="double_inst_close_btn" class="double_inst_setting" onChange="btnRandomiseSwitch();"
+            style="background-color:white;">
+            <option value="close" selected="selected">真ん中</option>
+            <option value="close">左上</option>
+          </select><br>
+          <input type="checkbox" name="double_inst_close_btn_Xrandom"
+            value="1">Closeボタン横位置をランダムにする<br>（位置：真ん中の場合のみ、左寄り／真ん中／右寄り）<br>
+          上側レクタングル設定<br>
+          <!--アドソース：
     <select name="double_inst_adsource_top" class="double_inst_setting" style="background-color:white;">
       <option value="close" selected="selected">YDN</option>
       <option value="close">Zucks</option>
     </select><br>-->
-    アドソースタグ：<input type="text" class="double_inst_setting double_inst_ds_top" name="double_inst_ds_top" size="45"><br>
-        <input type="checkbox" name="double_inst_dummypic_top" onclick="formInactivate(this.name, 'double_inst_ds_top')" value="1"><span style="font-size:14px;">代わりにダミー画像を使用する</span><br>
-        <div id="ds_top_caution" class="input_caution" style="display:none; color:red;">
-<p>※レポートユニットNoが設定されていません</p>    
-</div>
-        <div id="ds_top_ydn_caution" class="input_caution" style="display:none; color:red;">
-<p>※YDNはダブルインステに使用できません（2018/10/25~）</p>    
-</div>
-    横幅：<input type="text" class="double_inst_setting" name="double_inst_width_top" size="10" value="300"> px<br>
-    縦幅：<input type="text" class="double_inst_setting" name="double_inst_height_top" size="10" value="250"> px<br>
-        <div id="banner_top_caution" class="input_caution" style="display:none; color:red;">
-<p>※バナーサイズが設定されていません</p>    
-</div>
-    下側レクタングル設定<br>
-    <!--アドソース：
+          アドソースタグ：<input type="text" class="double_inst_setting double_inst_ds_top" name="double_inst_ds_top"
+            size="45"><br>
+          <input type="checkbox" name="double_inst_dummypic_top"
+            onclick="formInactivate(this.name, 'double_inst_ds_top')" value="1"><span
+            style="font-size:14px;">代わりにダミー画像を使用する</span><br>
+          <div id="ds_top_caution" class="input_caution" style="display:none; color:red;">
+            <p>※レポートユニットNoが設定されていません</p>
+          </div>
+          <div id="ds_top_ydn_caution" class="input_caution" style="display:none; color:red;">
+            <p>※YDNはダブルインステに使用できません（2018/10/25~）</p>
+          </div>
+          横幅：<input type="text" class="double_inst_setting" name="double_inst_width_top" size="10" value="300"> px<br>
+          縦幅：<input type="text" class="double_inst_setting" name="double_inst_height_top" size="10" value="250"> px<br>
+          <div id="banner_top_caution" class="input_caution" style="display:none; color:red;">
+            <p>※バナーサイズが設定されていません</p>
+          </div>
+          下側レクタングル設定<br>
+          <!--アドソース：
     <select name="double_inst_adsource_bottom" class="double_inst_setting" style="background-color:white;">
       <option value="close" selected="selected">YDN</option>
       <option value="close">Zucks</option>
     </select><br>-->
-    アドソースタグ：<input type="text" class="double_inst_setting double_inst_ds_bottom" name="double_inst_ds_bottom" size="45"><br>
-        <input type="checkbox" name="double_inst_dummypic_bottom" onclick="formInactivate(this.name, 'double_inst_ds_bottom')" value="1"><span style="font-size:14px;">代わりにダミー画像を使用する</span><br>
-        <div id="ds_bottom_caution" class="input_caution" style="display:none; color:red;">
-<p>※レポートユニットNoが設定されていません</p>    
-</div>
-        <div id="ds_bottom_ydn_caution" class="input_caution" style="display:none; color:red;">
-<p>※YDNはダブルインステに使用できません（2018/10/25~）</p>    
-</div>
-    横幅：<input type="text" class="double_inst_setting" name="double_inst_width_bottom" size="10" value="300"> px<br>
-    縦幅：<input type="text" class="double_inst_setting" name="double_inst_height_bottom" size="10" value="250"> px<br>
-        <div id="banner_bottom_caution" class="input_caution" style="display:none; color:red;">
-<p>※バナーサイズが設定されていません</p>    
-</div>
-<input type="checkbox" name="double_inst_width_free" value="1" onclick="selecterInactivate(this.name, 'no_zoom'); selecterActivate(this.name, 'zoom_move'); selecterActivate(this.name, 'zoom_nomove');">横幅フリー設定にする<br>（バナーの横幅を100%に設定し、高さ拡大なしで横幅のみ画面幅に<br>合わせる、「ズーム／拡大設定」と同時に使用しない）<br>
-    </div>
-</p>
-</div>
-
-<div id="rotate_reaction" style="border:solid 1px #000000;">
-<p>
-    <input type="checkbox" name="rotate_reaction_use" onclick="formDisplay(this.name, 'rotate_settings')" value="1"> 画面回転時に表示を変える設定を使う<br>
-    <div style="font-size: 12px; margin-left: 15px;">
-    <p>※画面回転時に拡大倍率を変える、（ダブルインステで）配置を横並びにする、<br>など表示を変えたい場合に使用する</p>
+          アドソースタグ：<input type="text" class="double_inst_setting double_inst_ds_bottom" name="double_inst_ds_bottom"
+            size="45"><br>
+          <input type="checkbox" name="double_inst_dummypic_bottom"
+            onclick="formInactivate(this.name, 'double_inst_ds_bottom')" value="1"><span
+            style="font-size:14px;">代わりにダミー画像を使用する</span><br>
+          <div id="ds_bottom_caution" class="input_caution" style="display:none; color:red;">
+            <p>※レポートユニットNoが設定されていません</p>
+          </div>
+          <div id="ds_bottom_ydn_caution" class="input_caution" style="display:none; color:red;">
+            <p>※YDNはダブルインステに使用できません（2018/10/25~）</p>
+          </div>
+          横幅：<input type="text" class="double_inst_setting" name="double_inst_width_bottom" size="10" value="300">
+          px<br>
+          縦幅：<input type="text" class="double_inst_setting" name="double_inst_height_bottom" size="10" value="250">
+          px<br>
+          <div id="banner_bottom_caution" class="input_caution" style="display:none; color:red;">
+            <p>※バナーサイズが設定されていません</p>
+          </div>
+          <input type="checkbox" name="double_inst_width_free" value="1"
+            onclick="selecterInactivate(this.name, 'no_zoom'); selecterActivate(this.name, 'zoom_move'); selecterActivate(this.name, 'zoom_nomove');">横幅フリー設定にする<br>（バナーの横幅を100%に設定し、高さ拡大なしで横幅のみ画面幅に<br>合わせる、「ズーム／拡大設定」と同時に使用しない）<br>
         </div>
-    <div id="rotate_settings" style="display:none; margin-left: 15px;">
-    <div id="rotate_settings_single">
-    <div class="rotate_setting">
-      横向時の表示（シングルインステ）：
-        <select class="rotate_single" name="rotate_single_type" style="background-color:white;">
-          <option value="single_horizon_nozoom" selected="selected">等倍表示（拡大なし）</option>
-          <!--<option value="single_horizon_zoom_ceiling">拡大表示＋上端接地</option>-->
-          <option value="single_horizon_nozoom">拡大表示</option>
+      </p>
+    </div>
+
+    <div id="rotate_reaction" style="border:solid 1px #000000;">
+      <p>
+        <input type="checkbox" name="rotate_reaction_use" onclick="toggleDisplayOnCheck(this.name, 'rotate_settings')" value="1">
+        画面回転時に表示を変える設定を使う<br>
+        <div style="font-size: 12px; margin-left: 15px;">
+          <p>※画面回転時に拡大倍率を変える、（ダブルインステで）配置を横並びにする、<br>など表示を変えたい場合に使用する</p>
+        </div>
+        <div id="rotate_settings" style="display:none; margin-left: 15px;">
+          <div id="rotate_settings_single">
+            <div class="rotate_setting">
+              横向時の表示（シングルインステ）：
+              <select class="rotate_single" name="rotate_single_type" style="background-color:white;">
+                <option value="single_horizon_nozoom" selected="selected">等倍表示（拡大なし）</option>
+                <!--<option value="single_horizon_zoom_ceiling">拡大表示＋上端接地</option>-->
+                <option value="single_horizon_nozoom">拡大表示</option>
+              </select>
+            </div>
+            <div class="rotate_setting">
+              横向時の配置（シングルインステ）<br>
+              縦方向：
+              <select class="rotate_single" name="rotate_single_vertical_arrange_type" style="background-color:white;">
+                <option value="vertical_center" selected="selected">真ん中</option>
+                <option value="vertical_top">上端接地</option>
+                <option value="vertical_bottom">下端接地</option>
+              </select><br>
+              横方向：
+              <select class="rotate_single" name="rotate_single_horizontal_arrange_type"
+                style="background-color:white;">
+                <option value="horizontal_center" selected="selected">真ん中</option>
+                <option value="horizontal_top">左端接地</option>
+                <option value="horizontal_bottom">右端接地</option>
+              </select><br>
+            </div>
+          </div>
+
+          <div id="rotate_settings_double" style="display:none;">
+            <div class="rotate_setting">
+              横向時の表示（ダブルインステ）：
+              <select class="rotate_double" name="rotate_double_type" style="background-color:white;"
+                disabled="disabled">
+                <option value="double_horizon_single" selected="selected">片方のみ表示</option>
+                <option value="double_horizon_side">横並びで表示</option>
+                <!--<option value="double_horizon_ceiling">上端接地</option>-->
+              </select>
+            </div>
+            <div class="rotate_setting">
+              横向時の配置（ダブルインステ）<br>
+              縦方向：
+              <select class="rotate_double" name="rotate_double_vertical_arrange_type" style="background-color:white;"
+                disabled="disabled">
+                <option value="vertical_center" selected="selected">真ん中</option>
+                <option value="vertical_top">上端接地</option>
+                <option value="vertical_bottom">下端接地</option>
+              </select><br>
+              横方向：
+              <select class="rotate_double" name="rotate_double_horizontal_arrange_type" style="background-color:white;"
+                disabled="disabled">
+                <option value="horizontal_center" selected="selected">真ん中</option>
+                <option value="horizontal_top">左端接地</option>
+                <option value="horizontal_bottom">右端接地</option>
+              </select><br>
+            </div>
+          </div>
+
+        </div>
+      </p>
+    </div>
+    <div id="header_space" style="border:solid 1px #000000;">
+      <p>
+        <input type="checkbox" name="header_space_use" onclick="selecterActivate(this.name, 'avoid_google_ad_block');"
+          value="1"> インステ表示時にページ上側に一画面分の空白をとる<br>
+        <div style="font-size: 12px; margin-left: 15px;">
+          <p>（インステを閉じる際に空白は消える）<br>
+            ※インステ裏にインライン広告が絶対出ないようにするための挙動</p>
+        </div>
+        <input type="checkbox" name="avoid_google_ad_block" onclick="selecterActivate(this.name, 'header_space_use');"
+          value="1"> GoogleChromeでの閲覧時のみに、ページ上部にスペースを作成し<br>
+        そこに配置される、インステではないインライン的な形の表示にする<br>
+        <div style="font-size: 12px; margin-left: 15px;">
+          <p>（閉じる際に空白は消える）<br>
+            ※<a
+              href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/849580739/Google+AdBlock+Better+Ads+Standards"
+              target="_blank">BetterAdsStandards</a>準拠用の対策の一つ<br>
+            ゾーン編集画面で「Google Chrome配信制限」を使わずに<br><a
+              href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/863377053"
+              target="_blank">BetterAdsStandardsに引っかからない</a>ようにしたい際<br>に使用する<br>
+            ※上記「インステ表示時にページ上側に一画面分の空白をとる」と同時に使わない（使えない）</p>
+        </div>
+      </p>
+    </div>
+    <div id="zoom_select" style="border:solid 1px #000000;">
+
+      <p>
+        <!-- <input type="checkbox" name="show_ad_by_device" value="1" onclick="toggleDisplayOnCheck(this.name, 'show_ad_only_sp');toggleDisplayOnCheck(this.name, 'directly_pasted_output_wrapper');"> -->
+        端末によって配信制限 (GAM経由配信はNG)
+        <select id="show_ad_by_device" name="show_ad_by_device" style="background-color:white;" onchange="toggleDisplayByValue(this.name, 'show_ad_only_sp');toggleDisplayByValue(this.name, 'directly_pasted_output_wrapper' );">
+          <option value="notuse" name="" selected="selected">なし</option>
+          <option value="sp_only" name="">SPのみに配信
+          </option>
+          <option value="pc_tablet_only" name="">PC・タブレットのみに配信</option>
         </select>
-    </div>
-    <div class="rotate_setting">
-      横向時の配置（シングルインステ）<br>
-        縦方向：
-    <select class="rotate_single" name="rotate_single_vertical_arrange_type" style="background-color:white;">
-      <option value="vertical_center" selected="selected">真ん中</option>
-      <option value="vertical_top">上端接地</option>
-      <option value="vertical_bottom">下端接地</option>
-    </select><br>
-    横方向：
-    <select class="rotate_single" name="rotate_single_horizontal_arrange_type" style="background-color:white;">
-      <option value="horizontal_center" selected="selected">真ん中</option>
-      <option value="horizontal_top">左端接地</option>
-      <option value="horizontal_bottom">右端接地</option>
-    </select><br>
-    </div>
-    </div>
-    
-    <div id="rotate_settings_double" style="display:none;">
-    <div class="rotate_setting">
-      横向時の表示（ダブルインステ）：
-        <select class="rotate_double" name="rotate_double_type" style="background-color:white;" disabled="disabled">
-          <option value="double_horizon_single" selected="selected">片方のみ表示</option>
-          <option value="double_horizon_side">横並びで表示</option>
-          <!--<option value="double_horizon_ceiling">上端接地</option>-->
-        </select>
-    </div>
-    <div class="rotate_setting">
-      横向時の配置（ダブルインステ）<br>
-        縦方向：
-    <select class="rotate_double" name="rotate_double_vertical_arrange_type" style="background-color:white;" disabled="disabled">
-      <option value="vertical_center" selected="selected">真ん中</option>
-      <option value="vertical_top">上端接地</option>
-      <option value="vertical_bottom">下端接地</option>
-    </select><br>
-    横方向：
-    <select class="rotate_double" name="rotate_double_horizontal_arrange_type" style="background-color:white;" disabled="disabled">
-      <option value="horizontal_center" selected="selected">真ん中</option>
-      <option value="horizontal_top">左端接地</option>
-      <option value="horizontal_bottom">右端接地</option>
-    </select><br>
-    </div>
-    </div>
+
+        <div id="show_ad_only_sp" style="display: none;">
+          広告タグ <input type="text" name="ad_tag" id="ad_tag" style="width:70%">
+        </div>
         
+      </p>
     </div>
-</p>
-</div>
-<div id="header_space" style="border:solid 1px #000000;">
-<p>
-    <input type="checkbox" name="header_space_use" onclick="selecterActivate(this.name, 'avoid_google_ad_block');" value="1"> インステ表示時にページ上側に一画面分の空白をとる<br>
-    <div style="font-size: 12px; margin-left: 15px;">
-    <p>（インステを閉じる際に空白は消える）<br>
-    ※インステ裏にインライン広告が絶対出ないようにするための挙動</p>
-        </div>
-    <input type="checkbox" name="avoid_google_ad_block" onclick="selecterActivate(this.name, 'header_space_use');" value="1"> GoogleChromeでの閲覧時のみに、ページ上部にスペースを作成し<br>
-    そこに配置される、インステではないインライン的な形の表示にする<br>
-    <div style="font-size: 12px; margin-left: 15px;">
-    <p>（閉じる際に空白は消える）<br>
-        ※<a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/849580739/Google+AdBlock+Better+Ads+Standards" target="_blank">BetterAdsStandards</a>準拠用の対策の一つ<br>
-    ゾーン編集画面で「Google Chrome配信制限」を使わずに<br><a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/863377053" target="_blank">BetterAdsStandardsに引っかからない</a>ようにしたい際<br>に使用する<br>
-    ※上記「インステ表示時にページ上側に一画面分の空白をとる」と同時に使わない（使えない）</p>
-        </div>
-    </p>
-</div>
-    
 
-</div>
 
-<div id="output_area" style="margin-left:50%;">
+  </div>
+
+  <div id="output_area" style="margin-left:50%;">
     <span style="font-size:18px; border-bottom: solid 1px black;">出力項目</span><br>
-    <span style="font-size:12px; border-bottom: solid 1px black;">　獲得されるコードをゾーンのPrepend/Append及びアドソースのタグ欄に記入する</span><br>
+    <span
+      style="font-size:12px; border-bottom: solid 1px black;">　獲得されるコードをゾーンのPrepend/Append及びアドソースのタグ欄に記入する</span><br>
     <div id="testpage_link" style="display:none; font-size:12px;">
-        <a href="http://other.geniee.jp/test/murano/Reproducts/openCodesTestField.html" target="_blank">
-            <span>出力コードの表示テスト（新規タブで開きます）</span>
-        </a><br>
-        <span>参考：<a href="https://geniee.atlassian.net/wiki/spaces/jigyoukaihatuhonnbu/pages/654773763/YDN" target="_blank">YDNインステ表示時に裏にあるインライン・オーバーレイ広告を非表示にしておく対応方法（インライン・オーバーレイゾーンに対して実装）</a>（オーバーレイジェネレータには実装済み）</span>
+      <a href="http://other.geniee.jp/test/murano/Reproducts/openCodesTestField.html" target="_blank">
+        <span>出力コードの表示テスト（新規タブで開きます）</span>
+      </a><br>
+      <span>参考：<a href="https://geniee.atlassian.net/wiki/spaces/jigyoukaihatuhonnbu/pages/654773763/YDN"
+          target="_blank">YDNインステ表示時に裏にあるインライン・オーバーレイ広告を非表示にしておく対応方法（インライン・オーバーレイゾーンに対して実装）</a>（オーバーレイジェネレータには実装済み）</span>
     </div>
     <br>
-    
-  ゾーンタイプ：<br>
+
+    ゾーンタイプ：<br>
     <textarea id="zone_output" size="30" style="width:150px; height:18px;"></textarea><br>
-  Prepend：<br>
+    Prepend：<br>
     <textarea id="prepend_output" class="output_form"></textarea><br>
-  Append：<br>
+    Append：<br>
     <textarea id="append_output" class="output_form"></textarea><br>
-  アドソース　タグ欄：<br>
+    アドソース　タグ欄：<br>
     <textarea id="ad_source_output" class="output_form"></textarea><br>
-    <span id="YDNtag" style="display:none; font-size:12px;" >※YDNアドソースに対しては、アドソースタグ欄冒頭に↓のコードを実装する
-    <textarea cols="80" rows="6" style="resize:none;" readonly="readonly"></textarea>
+    <span id="YDNtag" style="display:none; font-size:12px;">※YDNアドソースに対しては、アドソースタグ欄冒頭に↓のコードを実装する
+      <textarea cols="80" rows="6" style="resize:none;" readonly="readonly"></textarea>
     </span>
-</div>
+    <div id="directly_pasted_output_wrapper" style="display:none">
+    配信制限付きAladdinタグ：<span style="color:red"> ※以下に出力結果をPre/Appeではなく媒体ページに直貼り</span><br>
+    <textarea id="directly_pasted_output" class="output_form"></textarea><br>
+    </div>
+  </div>
 
 
-<script type="text/javascript" src="generator_form_script.js"></script>
-<script type="text/javascript" src="generator_datasend_script.js"></script>
-<script type="text/javascript" src="generator_inst_output.js"></script>
-<script>
-  function btnRandomiseSwitch(){
-      var btn_set = document.getElementsByName("double_inst_close_btn")[0].selectedIndex;
-      var btn_horizontal = document.getElementsByName("double_inst_close_btn_Xrandom")[0];
-      var double_setting = document.getElementById("double_overlay_setting");
-    if(btn_set == 1) btn_horizontal.disabled = "disabled";
-    else btn_horizontal.disabled = null;
-  }
-</script>
-<script>
-  function zoomSettingSwitch(){
-    var zoom_type = document.getElementsByName("zoom_type")[0].selectedIndex;
-    var close_btn_keep_setting = document.getElementById("close_btn_size_keep_setting");
-    if(zoom_type >= 1) close_btn_keep_setting.style.display = "block";
-    else close_btn_keep_setting.style.display = "none";
-  }
-</script>
-<script>
-  function changed_close_btn_preview(){
-    var change_active = document.getElementsByName("close_pic")[0];
-    var change_pic = document.getElementsByName("close_btn_picture")[0];
-    var preview_area = document.getElementById("close_btn_picture_preview");
-    if(change_active.checked == true){
-      preview_area.style.display = "inline";
-      preview_area.src = change_pic.value;
-    }else{
-      preview_area.style.display = "none";
-      preview_area.src = "";
-    }
-  }
-</script>
+  <script type="text/javascript" src="generator_form_script.js"></script>
+  <script type="text/javascript" src="generator_datasend_script.js"></script>
+  <script type="text/javascript" src="generator_inst_output.js"></script>
 
 </body>
+
 </html>

@@ -29,27 +29,38 @@ function formActivate(check, form){
         }
       }
       
-      function formDisplay(check, list){
+      function toggleDisplayOnCheck(check, targetElmId){
         if(document.getElementsByName(check)[0].checked == false){
-            document.getElementById(list).style.display = "none";
+            document.getElementById(targetElmId).style.display = "none";
         }else{
-            document.getElementById(list).style.display = "block";
+            document.getElementById(targetElmId).style.display = "block";
         }
       }
-      function formNodisplay(check, list){
-        if(document.getElementsByName(check)[0].checked == false){
-            document.getElementById(list).style.display = "block";
+
+      function toggleDisplayByValue( selectElmName, targetElmId ){
+        if(document.getElementsByName(selectElmName)[0].value == "notuse"){
+          document.getElementById(targetElmId).style.display = "none";
+          document.getElementById("ad_tag").value = "";
         }else{
-            document.getElementById(list).style.display = "none";
+            document.getElementById(targetElmId).style.display = "block";
         }
       }
-      function formDoubleDisplay(checkA, checkB, list){
+
+      function formNodisplay(check, targetElmId){
+        if(document.getElementsByName(check)[0].checked == false){
+            document.getElementById(targetElmId).style.display = "block";
+        }else{
+            document.getElementById(targetElmId).style.display = "none";
+        }
+      }
+      function formDoubleDisplay(checkA, checkB, targetElmId){
         if(document.getElementsByName(checkA)[0].checked == false && document.getElementsByName(checkB)[0].checked == false){
-            document.getElementById(list).style.display = "none";
+            document.getElementById(targetElmId).style.display = "none";
         }else{
-            document.getElementById(list).style.display = "block";
+            document.getElementById(targetElmId).style.display = "block";
         }
       }
+
 
       /*function switchActivate(check, form, inactive){
           formActivate(check, form);

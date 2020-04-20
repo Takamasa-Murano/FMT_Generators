@@ -5,11 +5,11 @@
   <title>GenieeSSP設定コードジェネレータ：オーバーレイ</title>
   <script>
         window.addEventListener('DOMContentLoaded',function(){
-        var forYDN =  (function(){/*<!-- YDNアドソースのタグ欄にのみ記入する箇所　ここから -->
+        var forYDN =  (function(){/*<!-- YDNアドソースのタグ欄にのみ記入する箇所 ここから -->
 <script type="text/javascript">
 window.__gn_ov_yads_params = true;
 </scr*/}).toString().match(/\/\*([^]*)\*\//)[1] + (function(){/*ipt>
-<!-- YDNアドソースのタグ欄にのみ記入する箇所　ここまで -->*/}).toString().match(/\/\*([^]*)\*\//)[1];
+<!-- YDNアドソースのタグ欄にのみ記入する箇所 ここまで -->*/}).toString().match(/\/\*([^]*)\*\//)[1];
         document.getElementById("YDNtag").getElementsByTagName("textarea")[0].value = forYDN;
             },false);
   </script>
@@ -47,7 +47,7 @@ window.__gn_ov_yads_params = true;
 <body bgcolor="lightgray">
     <h1>オーバーレイゾーン設定ジェネレータ</h1>
     <span style="font-size:10px;">2019年10月3日更新</span><br>
-    <span style="font-size:16px;"><a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/573374954" target="_blank">マニュアルへ</a>　<a href="generator_ov_old.html">旧バージョンへ</a></span>
+    <span style="font-size:16px;"><a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/573374954" target="_blank">マニュアルへ</a> <a href="generator_ov_old.html">旧バージョンへ</a></span>
     <p><span style="font-size:15px;">※YDNアドソースを使用する際には、<a href="https://geniee.atlassian.net/wiki/spaces/adplatformdivision/pages/126845128/Yahoo+Display+AD+Network+YDN">掲載ポリシー等</a>への違反がないか確認すること、またアドソースに以下のテキストボックス中の記述を追記しておくこと</span></p>
     <p><span style="font-size:15px;">※空き枠検知をONにするとアクティブ回避コードおよびUI制御が効かなくなるので、YDN、Bidswitch、DBMは停止にすること</span></p>
     <p><span style="font-size:15px;">※GAM（旧DFP）経由で配信する場合は<a href="https://geniee.atlassian.net/wiki/spaces/jigyoukaihatuhonnbu/pages/756058053/GAM" target="_blank">こちら</a></span></p>
@@ -59,7 +59,7 @@ window.__gn_ov_yads_params = true;
     
 <div id="inputs" style="float:left; max-width:49%;">
     <span style="font-size:18px; border-bottom: solid 1px black;">入力項目</span><br>
-    <span style="font-size:12px; border-bottom: solid 1px black;">　必要な項目を入力して、↑の「コードの取得」ボタンを押す</span><br>
+    <span style="font-size:12px; border-bottom: solid 1px black;"> 必要な項目を入力して、↑の「コードの取得」ボタンを押す</span><br>
     
 <!--<div id="zone_select">
 <p>
@@ -92,7 +92,7 @@ Xボタン設定<br>
     
 <div id="double_overlay_setting" style="display:none; border:solid 1px #000000;">
 <p>
-横並びダブルオーバーレイ　アドソース設定<br>
+横並びダブルオーバーレイ アドソース設定<br>
   左側広告用アドソース：<input type="text" class="adsource_param" name="double_left_adsource" size="10"><br>
   右側広告用アドソース：<input type="text" class="adsource_param" name="double_right_adsource" size="10"><br>
     <div id="left_adsource_caution" class="input_caution" style="display:none; color:red;"><p>※左側広告用アドソースの内容が指定されていません</p></div>
@@ -103,7 +103,7 @@ Xボタン設定<br>
 <div id="zoom_select" style="border:solid 1px #000000;">
 <p>
 拡大設定<br>
-  <input type="checkbox" name="width_zoom" onclick="formDisplay(this.name, 'width_zoom_ydn');" value="1"> 横幅拡大を行う　<div id="width_zoom_ydn" style="display:none; font-size:12px; margin-left: 15px;"><input type="checkbox" name="width_zoom_ydncheck" value="1">YDNでは行わない</div>
+  <input type="checkbox" name="width_zoom" onclick="formDisplay(this.name, 'width_zoom_ydn');" value="1"> 横幅拡大を行う <div id="width_zoom_ydn" style="display:none; font-size:12px; margin-left: 15px;"><input type="checkbox" name="width_zoom_ydncheck" value="1">YDNでは行わない</div>
 </p>
 </div>
 
@@ -129,12 +129,12 @@ PRバー設定<br>
 <p>※PRバーのフォントサイズが指定されていません</p>    
 </div>
   PR背景色：<input type="text" class="pr_param" name="pr_background" size="10" value="black"><br>
-  <p class="help-block">帯の背景色。直接入力も可能（記入例：色名で指定⇒ white　cssで指定⇒ #000000 ）</p>
+  <p class="help-block">帯の背景色。直接入力も可能（記入例：色名で指定⇒ white cssで指定⇒ #000000 ）</p>
     <div id="pr_background_caution" class="input_caution" style="display:none; color:red;">
 <p>※PRバーの背景色が指定されていません</p>    
 </div>
   PR文字色：<input type="text" class="pr_param" name="pr_font_color" size="10" value="white"><br>
-  <p class="help-block">帯の中に書く文字色。直接入力も可能（記入例：色名で指定⇒ white　cssで指定⇒ #000000 ）</p>
+  <p class="help-block">帯の中に書く文字色。直接入力も可能（記入例：色名で指定⇒ white cssで指定⇒ #000000 ）</p>
         <div id="pr_font_color_caution" class="input_caution" style="display:none; color:red;">
 <p>※PRバーの文字色が指定されていません</p>    
 </div>
@@ -176,7 +176,8 @@ PRバー設定<br>
   インステXボタンのid名：<input type="text" class="inst_param" name="inst_close_id" size="10" maxlength="20" value="gn_interstitial_close_icon"><br>
   <p class="help-block">インステXボタンに相当するimgタグのid名（デフォルト：gn_interstitial_close_icon）</p>
     <div id="inst_close_caution" class="input_caution" style="display:none; color:red;">
-<p>※インステXボタンのid名が指定されていません</p>    
+<p>※インステXボタンのid名が指定されて
+  いません</p>    
 </div>
     </div>
 </p>
@@ -196,24 +197,44 @@ PRバー設定<br>
 </div>
 
 <div id="ad_source_individual_setting" style="border:solid 1px #000000;">
-<p>
-アドソースごとの個別設定<br>
-  <input type="checkbox" name="adsource_individual_height" onclick="formDisplay(this.name, 'height_settings');" value="1"> 高さをバナーサイズから変える
-    <div id="height_settings" style="display:none; margin-left: 15px;">高さ：<input type="text" class="height_param" name="adsource_height" size="10" maxlength="20" value="100">px</div>
-    <div id="height_setting_caution" class="input_caution" style="display:none; color:red;">
-<p>※変更後高さが指定されていません</p>    
+  <p>
+    アドソースごとの個別設定<br>
+    <input type="checkbox" name="adsource_individual_height" onclick="formDisplay(this.name, 'height_settings');" value="1"> 高さをバナーサイズから変える
+      <div id="height_settings" style="display:none; margin-left: 15px;">高さ：<input type="text" class="height_param" name="adsource_height" size="10" maxlength="20" value="100">px</div>
+      <div id="height_setting_caution" class="input_caution" style="display:none; color:red;">
+  <p>※変更後高さが指定されていません</p>
+  </div>
+    <input type="checkbox" name="adsource_pr_bar_delete" value="1"> PRバーを消す
+      
+  </p>
 </div>
-  <input type="checkbox" name="adsource_pr_bar_delete" value="1"> PRバーを消す
-    
-</p>
-</div>
+<div id="ov_add_x_button_list" style="border:solid 1px #000000;">
+      <p>Xボタン</p>
+      <input type="checkbox" name="ov_add_x_button" onclick="formDisplay(this.name, 'ov_add_x_button_direction');formDisplay(this.name, 'ov_add_x_button_img_url_check');" value="1"> OVにXボタンをつける
+        <div id="ov_add_x_button_direction" style="display:none; margin-left: 15px;">
+          位置：
+          <select name="" id="ov-x-button-direction-list">
+            <option name="ov-x-button-direction" value="left">左</option>
+            <option name="ov-x-button-direction" value="right">右</option>
+          </select>
+        </div>
+          <div id="ov_add_x_button_img_url_check" style="display:none; margin-left: 15px;">
+              <input type="checkbox" name="ov_add_x_button_img_url" onclick="formDisplay(this.name, 'ov_add_x_button_img_url');" value="1">画像を変更する
+              <div id="ov_add_x_button_img_url" style="display:none; margin-left: 15px;">
+                  画像のURL：<input type="url" onchange="changed_close_btn_preview()" name="ov_x_button_img_url" value=""><br>
+                  <span style="font-size:10px;">プレビュー →</span>
+                  <img src="" class="close_btn_picture" id="close_btn_img_elm" alt="画像URL無効" style="display:none; width:20px; height:20px; margin-left:3px;"><br>
+                  <div id="btn_picture_caution" class="input_caution" style="display:none; color:red; margin-left: 15px;"></div>
+              </div>
+          </div>     
+  </div>
 
 </div>
     
 
 <div id="output_area" style="margin-left:50%;">
     <span style="font-size:18px; border-bottom: solid 1px black;">出力項目</span><br>
-    <span style="font-size:12px; border-bottom: solid 1px black;">　獲得されるコードをゾーンの各欄に記入する</span><br>
+    <span style="font-size:12px; border-bottom: solid 1px black;">獲得されるコードをゾーンの各欄に記入する</span><br>
     <div id="testpage_link" style="font-size:12px; display:none;">
         <a href="http://other.geniee.jp/test/murano/Reproducts/openCodesTestField.html" target="_blank"><span>出力コードの表示テスト（新規タブで開きます）</span></a><br>
         <a href="https://geniee.atlassian.net/wiki/spaces/~takamasa.murano/pages/891033854/iPhoneX" target="_blank"><span>iPhoneX以降の機種で画面下部から離れて表示される仕様について（対応コード含む）</span></a>
@@ -226,7 +247,7 @@ PRバー設定<br>
     <textarea id="prepend_output" class="output_form"></textarea><br>
   Append：<br>
     <textarea id="append_output" class="output_form"></textarea><br>
-  アドソース　タグ欄：<br>
+  アドソース タグ欄：<br>
     <textarea id="ad_source_output" class="output_form"></textarea><br>
     <span id="YDNtag" style="display:none; font-size:12px;" >※YDNアドソースに対しては、アドソースタグ欄冒頭に↓のコードを実装する
     <textarea cols="80" rows="6" style="resize:none;" readonly="readonly"></textarea>
@@ -248,6 +269,19 @@ PRバー設定<br>
       
     if(zone_type == 3) double_setting.style.display = "block";
     else double_setting.style.display = "none";
+  }
+
+  function changed_close_btn_preview(){
+    var change_active = document.getElementsByName("ov_add_x_button_img_url")[0];
+    var change_pic = document.getElementsByName("ov_x_button_img_url")[0];
+    var close_btn_img_elm = document.getElementById("close_btn_img_elm");
+    if(change_active.checked == true){
+      close_btn_img_elm.style.display = "inline";
+      close_btn_img_elm.src = change_pic.value;
+    }else{
+      close_btn_img_elm.style.display = "none";
+      close_btn_img_elm.src = "";
+    }
   }
 </script>
 

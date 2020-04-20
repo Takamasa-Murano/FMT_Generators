@@ -6,6 +6,7 @@
           document.getElementById("append_output").value = "";
           //アドソース　タグ欄
           document.getElementById("ad_source_output").value = "";
+          document.getElementById("directly_pasted_output").value = "";
           
           let isZone = document.getElementsByName("zone_type")[0],
               isZoom = document.getElementsByName("zoom_type")[0],
@@ -32,7 +33,8 @@
               isRotateArrangeHorizontal = document.getElementsByName("rotate_single_horizontal_arrange_type")[0],
               isTimingAdjust = document.getElementsByName("timing_exist")[0],
               isHeaderSpace = document.getElementsByName("header_space_use")[0],
-              isAvoidGoogleAdBlock = document.getElementsByName("avoid_google_ad_block")[0];
+              isAvoidGoogleAdBlock = document.getElementsByName("avoid_google_ad_block")[0],
+              showAdByDevice = document.getElementsByName("show_ad_by_device")[0];
           
           let zt = "";
           switch(isZone.selectedIndex){
@@ -341,9 +343,7 @@ width:100%;
         strage.removeItem('backCheck');
         return;
       }else{
-      console.log("setshow");
       window.addEventListener('popstate', function(e) {
-        console.log("adshow");
         //広告#gn_back-interstitial_areaを非表示な状態でHTMLに差し込んでくれれば行けそう。
         var a = document.getElementById("gn_back-interstitial_close_icon");
         var b = document.getElementById("gn_back-interstitial_area");
@@ -776,7 +776,7 @@ function isChrome(){
           app_text += app_arrange;
           }
           
-          if(isRotate.checked == true && isDouble.checked == false){
+          if(isRotate.checked && !isDouble.checked){
               app_text += app_rotate_common_early;
               if(isRotateSingle.selectedIndex == 0) app_text += app_rotate_same;
               //if(isRotateSingle.selectedIndex == 1) app_text += app_rotate_zoom_up;
@@ -784,7 +784,7 @@ function isChrome(){
               app_text += app_rotate_common_late;
           }
           
-          if(isDouble.checked == true){
+          if(isDouble.checked){
              let th = parseFloat(document.getElementsByName("double_inst_height_top")[0].value),
                  bh = parseFloat(document.getElementsByName("double_inst_height_bottom")[0].value);
              let double_border = 400;
@@ -792,15 +792,16 @@ function isChrome(){
              if(th + bh > double_border) app_text += app_double_in_small_window;
           }
           
-          if(isBackInst.checked == true){
+          if(isBackInst.checked){
              app_text += app_back_inst;
           }
           
-          if(isHeaderSpace.checked == true){
+          if(isHeaderSpace.checked){
              app_text += app_header_space;
-          }else if(isAvoidGoogleAdBlock.checked == true){
+          }else if(isAvoidGoogleAdBlock.checked){
              app_text += app_avoid_adblock;
           }
+
           
           
 ////////////アドソース-タグ欄の設定////////////////////////////////////////////////////////////////////////////
@@ -1257,7 +1258,41 @@ window.__gn_double_params = true;
               let back_afst_display_rep = new RegExp( back_afst_display_target, "g" );
               pre_text = pre_text.replace(back_afst_display_rep, 'z-index:1000000000000; display:none;');
           }
-          
+          console.log(111);
+          ///////////配信制限付きAladdinタグの設定　デフォルトから条件に応じて置換・追加////////////////////////////////////////////////////
+          var directly_pasted_text = "";
+          var show_ad_only_pc = "";
+          var ad_tag_str = document.getElementById("ad_tag").value;
+          show_ad_only_pc = showAdByDevice.value === "pc_tablet_only" ? "!" : "";
+          if(showAdByDevice.value !== "notuse"){
+            if(!ad_tag_str.match(/<script.*<\/script>/)) {
+                alert("scriptタグを入力して下さい");
+                return false;
+            }
+            var ad_tag = ad_tag_str.match(/<script.*<\/script>/)[0];
+            var formatted_ad_tag = ad_tag.replace("<\/script>","<\\\/script>")
+            directly_pasted_text = (function(){/*
+<script>
+if(*/}).toString().match(/\/\*([^]*)\*\//)[1] + show_ad_only_pc + (function(){/*isMobile()){
+    document.write('*/}).toString().match(/\/\*([^]*)\*\//)[1] + formatted_ad_tag + (function(){/*')
+}
+
+function isMobile() {
+    var ua = navigator.userAgent;
+    if (ua.indexOf('iPhone') >= 0
+        || (ua.indexOf('Android') >= 0 && ua.indexOf('Mobile') >= 0)
+        || (ua.indexOf('Windows') >= 0 && ua.indexOf('Phone') >= 0)
+        || (ua.indexOf('Firefox') >= 0 && ua.indexOf('Mobile') >= 0)
+        || ua.indexOf('Blackberry') >= 0
+    ) return true;
+    else return false;
+}
+</script>
+*/}).toString().match(/\/\*([^]*)\*\//)[1];
+}
+console.log(222);
+        
+
           //入力不備系
           let inputError = false;
           not_ydn_double();
@@ -1287,6 +1322,7 @@ window.__gn_double_params = true;
               pre_text = "";
               app_text = "";
               ad_tag_text = "";
+              directly_pasted_text = "";
           }
       
           //Prepend出力
@@ -1297,6 +1333,7 @@ window.__gn_double_params = true;
           
           //アドソース　タグ欄出力
           document.getElementById("ad_source_output").value = ad_tag_text;
+          document.getElementById("directly_pasted_output").value = directly_pasted_text;
       }
         
       function replaceSearch(target, start, end){
@@ -1325,4 +1362,39 @@ window.__gn_double_params = true;
       function not_ydn_double(){
           if(document.getElementsByName("double_inst_ds_top")[0].value.indexOf("yads_ad_ds") >= 0) document.getElementById("ds_top_ydn_caution").style.display = "block";
           if(document.getElementsByName("double_inst_ds_bottom")[0].value.indexOf("yads_ad_ds") >= 0) document.getElementById("ds_bottom_ydn_caution").style.display = "block";
+      }
+
+      function btnRandomiseSwitch() {
+        var btn_set = document.getElementsByName("double_inst_close_btn")[0].selectedIndex;
+        var btn_horizontal = document.getElementsByName("double_inst_close_btn_Xrandom")[0];
+        var double_setting = document.getElementById("double_overlay_setting");
+        if (btn_set == 1) btn_horizontal.disabled = "disabled";
+        else btn_horizontal.disabled = null;
+      }
+  
+      function zoomSettingSwitch() {
+        var zoom_type = document.getElementsByName("zoom_type")[0].selectedIndex;
+        var close_btn_keep_setting = document.getElementById("close_btn_size_keep_setting");
+        if (zoom_type >= 1) close_btn_keep_setting.style.display = "block";
+        else close_btn_keep_setting.style.display = "none";
+      }
+  
+      function zoomSettingSwitch() {
+        var zoom_type = document.getElementsByName("zoom_type")[0].selectedIndex;
+        var close_btn_keep_setting = document.getElementById("close_btn_size_keep_setting");
+        if (zoom_type >= 1) close_btn_keep_setting.style.display = "block";
+        else close_btn_keep_setting.style.display = "none";
+      }  
+  
+      function changed_close_btn_preview() {
+        var change_active = document.getElementsByName("close_pic")[0];
+        var change_pic = document.getElementsByName("close_btn_picture")[0];
+        var preview_area = document.getElementById("close_btn_picture_preview");
+        if (change_active.checked == true) {
+          preview_area.style.display = "inline";
+          preview_area.src = change_pic.value;
+        } else {
+          preview_area.style.display = "none";
+          preview_area.src = "";
+        }
       }
